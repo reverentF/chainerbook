@@ -121,7 +121,7 @@ class DQNGymAgent(object):
         self.mix_rate = mix_rate
         self.batch_size = batch_size
 
-        self.q_net = Qfunc(self.action_dim, self.state_dim, optimizer(**optimizer_args[0]), model_network))
+        self.q_net = Qfunc(self.action_dim, self.state_dim, optimizer(**optimizer_args[0]), model_network)
         self.q_net_target = Qfunc(self.action_dim, self.state_dim, optimizer(**optimizer_args[0]), model_network)
         self.q_net_target.update_interpol(self.q_net.model, 1.0)
 
