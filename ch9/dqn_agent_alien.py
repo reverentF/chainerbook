@@ -1,5 +1,3 @@
-import pyglet
-
 import chainer.optimizers
 import chainer.functions
 import chainer.serializer
@@ -78,9 +76,9 @@ class ReplayMemory(object):
         """
         Add a sample which consists of (s,a,r,s') and done flag.
         """
-        self.data[self.current, 0:self.state_dim] = state_vector
+        self.data[self.current, 0:self.state_dim] = state_vector.reshape((1,-1))
         self.data[self.current, self.state_dim:self.state_dim+self.action_dim] = action_vector
-        self.data[self.current, self.state_dim+self.action_dim:-2] = next_state_vector
+        self.data[self.current, self.state_dim+self.action_dim:-2] = next_state_vector.reshape((1,-1))
         self.data[self.current, -2] = reward
         self.data[self.current, -1] = done
 
@@ -156,7 +154,7 @@ class DQNGymAgent(object):
         if random.random() < epsilon:
             return random.randint(0, self.action_dim-1)
         else:
-            return self.q_net.action(state_vector.reshape((1,self.state_dim)))[0]
+            return self.q_net.action(state_vector.reshape((1,-1)))[0]
 
     def learn(self):
         (states,
@@ -192,7 +190,7 @@ class DQNGymAgent(object):
 
         
 if __name__=='__main__':
-    environment = 'CartPole-v0' 
+    environment = 'Alien-v0' 
     n_episode = 2000  # number of episodes
     max_iter = 200 # number of iterations
 
@@ -203,7 +201,7 @@ if __name__=='__main__':
     render = True
 
     env = gym.make(environment)
-    agent = DQNGymAgent(env.action_space.n, env.observation_space.shape[0],
+    agent = DQNGymAgent(env.action_space.n, numpy.prod(env.observation_space.shape),
                         discount=discount, model_network=network.MLP3DQNet)
 
     for episode in range(n_episode):

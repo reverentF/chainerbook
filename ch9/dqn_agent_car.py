@@ -1,5 +1,3 @@
-import pyglet
-
 import chainer.optimizers
 import chainer.functions
 import chainer.serializer
@@ -192,9 +190,9 @@ class DQNGymAgent(object):
 
         
 if __name__=='__main__':
-    environment = 'CartPole-v0' 
+    environment = 'MountainCar-v0' 
     n_episode = 2000  # number of episodes
-    max_iter = 200 # number of iterations
+    max_iter = 55555000 # number of iterations
 
     discount = 0.99 # discount rate "gamma"
     epsilon = 0.05 # epilon for epsilon-greedy
