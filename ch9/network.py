@@ -53,7 +53,7 @@ class MLP2DQNet(chainer.Chain):
 
 class MLP1DQNet(chainer.Chain):
     def __init__(self, insize, outsize):
-        super(MLP2DQNet, self).__init__()
+        super(MLP1DQNet, self).__init__()
         with self.init_scope():
             self.layer1 = chainer.links.Linear(insize, outsize)
 
